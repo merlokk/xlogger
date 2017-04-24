@@ -85,6 +85,7 @@ class xLogger: public Print{
     template<typename... Args>
     void printf(LogLevel loglev, const char* fmtstr, Args... args)
     {
+      curHeader.logLevel = loglev;
       int len = snprintf(pf_buffer, sizeof(pf_buffer), fmtstr, args...);
       print(curHeader.logLevel, pf_buffer);
     }
