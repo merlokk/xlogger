@@ -1,5 +1,8 @@
 /*
- * Logger 
+ * xLogger library
+ *
+ * Logging to Serial port and/or Telnet. Saves last log lines to memory buffer (LOG_SIZE - size of this buffer).
+ * Can execute user commands (reboot, start wifi config, etc...)
  * 
  * (c) Oleg Moiseenko 2017
  */
@@ -12,13 +15,13 @@
 #include <TimeLib.h>         // https://github.com/PaulStoffregen/Time 
 #include <NtpClientLib.h>    // https://github.com/gmag11/NtpClient
 
-#define XLOGGER_VERSION      "0.9"
+#define XLOGGER_VERSION      "1.0"
 
 #define TELNET_PORT          23                  // telent port for remote connection
-#define LOG_SIZE             4096                // size of log memory in bytes
+#define LOG_SIZE             4096                // size of log memory buffer in bytes
 #define LOG_SEGMENT          256                 // minimal size of log rotating
-#define PRINTF_BUFFER_LENGTH 128                 // buffer length for printf
-#define LINE_BUFFER_LENGTH   256                 // buffer length for lines (concat print and printf)
+#define PRINTF_BUFFER_LENGTH 128                 // buffer length for printf execution
+#define LINE_BUFFER_LENGTH   256                 // buffer length for commands (concatinate print and println)
 extern char pf_buffer[PRINTF_BUFFER_LENGTH];
 
 // string to flash
