@@ -55,6 +55,9 @@ void xLogger::handle() {
       telnetClient = telnetServer.available();
       telnetClient.flush();  // clear input buffer, else you get strange characters
 
+      // clear authenticate
+      telnetAuthenticated = !strnlen(passwd, 1);
+
       // Show the initial message
       showInitMessage();
       if (telnetAuthenticated)
