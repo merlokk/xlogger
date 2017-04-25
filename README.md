@@ -31,6 +31,7 @@ Command reboot reboots ESP.
 Command startwificfg puts ESP to configure mode. Show configuration AP.
 Command cfgdevice writes RS-485 device type to ESP memory and reboot.
 
-Please, enter password before entering commands. Password length may be up to 10 symbols.```
+Please, enter password before entering commands. Password length may be up to 10 symbols. 
+```
 
 
