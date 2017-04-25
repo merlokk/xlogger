@@ -1,0 +1,32 @@
+#######################################
+# Syntax Coloring Map For xLogger
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+xLogger	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+cmdCallback	KEYWORD2
+setSerial	KEYWORD2
+enableSerial	KEYWORD2
+setPassword KEYWORD2
+setProgramVersion	KEYWORD2
+setTimeFormat	KEYWORD2
+setShowDebugLevel KEYWORD2
+setFilterDebugLevel	KEYWORD2
+print KEYWORD2
+printf	KEYWORD2
+println KEYWORD2
+begin	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+#	LITERAL1
