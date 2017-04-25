@@ -34,4 +34,48 @@ Command cfgdevice writes RS-485 device type to ESP memory and reboot.
 Please, enter password before entering commands. Password length may be up to 10 symbols. 
 ```
 
+## Logger functions
 
+`xLogger()`
+
+Constructor. Creates object.
+
+`void begin(char *_hostName, Stream *_serial = NULL, bool _serialEnabled = false, char *_passwd = "")`
+
+Initializes object
+
+`void handle()`
+
+This function nneds to call in loop cycle
+
+`void cmdCallback(logCallback, const char* = NULL)`
+
+Set callback to function that executes the user commands and command's help
+
+`void setSerial(Stream *_serial)`
+
+Set serial port that log lines put to. It can be: HardwareSerial, SoftwareSerial, Stream, Print, loggers
+
+`void enableSerial(bool _serialEnabled)`
+
+Enable/disable put log lines to serial port
+
+`void setPassword(char *_passwd)`
+
+Set password for access logger via telnet port
+
+`void setProgramVersion(char * _programVersion)`
+
+Set pointer to null-terminated string with program's version. It displays via telnet.
+
+`void setTimeFormat(LogTimeFormat _timeFormat)`
+
+Change time format for displaying in log lines
+
+`void setShowDebugLevel(bool _showDebugLevel)`
+
+Enable/disable showing debug level in log lines
+
+`void setFilterDebugLevel(LogLevel _logLevel)`
+
+Filters outting and showing log lines by their minimal debug level
