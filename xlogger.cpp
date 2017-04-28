@@ -209,7 +209,7 @@ void xLogger::setSerial(Stream *_serial) {
   logSerial = _serial;
 }
 
-void xLogger::setPassword(char *_passwd) {
+void xLogger::setPassword(const char *_passwd) {
   strncpy(passwd, _passwd, 10);
   telnetAuthenticated = !strnlen(passwd, 1);
 }

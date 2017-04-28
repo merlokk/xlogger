@@ -73,7 +73,7 @@ class xLogger: public Print{
 
     void setSerial(Stream *_serial);
     void enableSerial(bool _serialEnabled);
-    void setPassword(char *_passwd);
+    void setPassword(const char *_passwd);
     void setProgramVersion(char * _programVersion);
     void setTimeFormat(LogTimeFormat _timeFormat);
     void setShowDebugLevel(bool _showDebugLevel);
