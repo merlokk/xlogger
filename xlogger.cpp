@@ -93,29 +93,7 @@ void xLogger::handle() {
   
 }
 
-bool xLogger::processCommand(String &cmd) {
-  // process login
-  if (!telnetAuthenticated) {
-
-    if (cmd == String(passwd)) {
-      telnetClient.println("Password accepted.");
-      println(llInfo, "Password accepted.");
-
-      showLog();
-
-      telnetAuthenticated = true;
-      return true;
-    }
-
-    telnetClient.println("Password rejected.");
-    println(llError, "Password (" + cmd + ") rejected.");
-
-    return false;
-  }
-
-  // process command
-  println(llInfo, "Telnet received command: " + cmd);
-
+bool xLogger::ExecCommand(const String &cmd) {
   if (cmd == "?") {
     showInitMessage();
     return true;
@@ -191,6 +169,36 @@ bool xLogger::processCommand(String &cmd) {
   }
   if (cmd == "time ?") {
     println("Time format: " + String(strLogTimeFormat[logTimeFormat]));
+    return true;
+  }
+
+  return false;
+}
+
+bool xLogger::processCommand(String &cmd) {
+  // process login
+  if (!telnetAuthenticated) {
+
+    if (cmd == String(passwd)) {
+      telnetClient.println("Password accepted.");
+      println(llInfo, "Password accepted.");
+
+      showLog();
+
+      telnetAuthenticated = true;
+      return true;
+    }
+
+    telnetClient.println("Password rejected.");
+    println(llError, "Password (" + cmd + ") rejected.");
+
+    return false;
+  }
+
+  // process command
+  println(llInfo, "Telnet received command: " + cmd);
+
+  if (ExecCommand(cmd)) {
     return true;
   }
 

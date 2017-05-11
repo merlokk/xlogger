@@ -64,93 +64,90 @@ struct LogEntity {
 };
 
 class xLogger: public Print{
-  public:
-    xLogger();
+public:
+  xLogger();
 
-    void begin(char *_hostName, Stream *_serial = NULL, bool _serialEnabled = false, char *_passwd = "");
-    void handle();
-    void cmdCallback(logCallback, const char* = NULL);
+  void begin(char *_hostName, Stream *_serial = NULL, bool _serialEnabled = false, char *_passwd = "");
+  void handle();
+  void cmdCallback(logCallback, const char* = NULL);
 
-    void setSerial(Stream *_serial);
-    void enableSerial(bool _serialEnabled);
-    void setPassword(const char *_passwd);
-    void setProgramVersion(char * _programVersion);
-    void setTimeFormat(LogTimeFormat _timeFormat);
-    void setShowDebugLevel(bool _showDebugLevel);
-    void setFilterDebugLevel(LogLevel _logLevel);
+  bool ExecCommand(const String &cmd);
 
-    virtual size_t write(uint8_t c);
-    virtual size_t write(const uint8_t *buffer, size_t size);
+  void setSerial(Stream *_serial);
+  void enableSerial(bool _serialEnabled);
+  void setPassword(const char *_passwd);
+  void setProgramVersion(char * _programVersion);
+  void setTimeFormat(LogTimeFormat _timeFormat);
+  void setShowDebugLevel(bool _showDebugLevel);
+  void setFilterDebugLevel(LogLevel _logLevel);
 
-    template<typename... Args>
-    void printf(LogLevel loglev, const char* fmtstr, Args... args)
-    {
-      curHeader.logLevel = loglev;
-      int len = snprintf(pf_buffer, sizeof(pf_buffer), fmtstr, args...);
-      print(curHeader.logLevel, pf_buffer);
-    }
-    template<typename... Args>
-    void printf(const char* fmtstr, Args... args) {
-      printf(llInfo, fmtstr, args...);
-    }
+  virtual size_t write(uint8_t c);
+  virtual size_t write(const uint8_t *buffer, size_t size);
+
+  template<typename... Args>
+  void printf(LogLevel loglev, const char* fmtstr, Args... args) {
+    curHeader.logLevel = loglev;
+    int len = snprintf(pf_buffer, sizeof(pf_buffer), fmtstr, args...);
+    print(curHeader.logLevel, pf_buffer);
+  }
+  template<typename... Args>
+  void printf(const char* fmtstr, Args... args) {
+    printf(llInfo, fmtstr, args...);
+  }
     
-    template<typename... Args>
-    void print(LogLevel loglev, Args... args)
-    {
-      curHeader.logLevel = loglev;
-      Print::print(args...);
-    }
-    template<typename... Args>
-    void print(Args... args)
-    {
-      print(llInfo, args...);
-    }
+  template<typename... Args>
+  void print(LogLevel loglev, Args... args) {
+    curHeader.logLevel = loglev;
+    Print::print(args...);
+  }
+  template<typename... Args>
+  void print(Args... args) {
+    print(llInfo, args...);
+  }
 
-    template<typename... Args>
-    void println(LogLevel loglev, Args... args)
-    {
-      curHeader.logLevel = loglev;
-      Print::println(args...);
-    }
-    template<typename... Args>
-    void println(Args... args)
-    {
-      println(llInfo, args...);
-    }
-  private:
-    String hostName = "n/a";
-    bool serialEnabled = false;
-    Stream *logSerial = NULL;
-    uint8_t logMem[LOG_SIZE + sizeof(LogHeader) + 8] = {0}; // 8 - guard interval
-    char passwd[11] = {0};
-    bool telnetConnected = false;
-    char * programVersion = NULL;
-    const char * commandDescription = NULL;
-    bool showDebugLevel = true;
-    LogLevel filterLogLevel = llInfo;
-    int oldMillis = 0;
-    LogTimeFormat logTimeFormat = ltStrTime;
-    String telnetCommand = "";
-    bool telnetAuthenticated = false;
+  template<typename... Args>
+  void println(LogLevel loglev, Args... args) {
+    curHeader.logLevel = loglev;
+    Print::println(args...);
+  }
+  template<typename... Args>
+  void println(Args... args) {
+    println(llInfo, args...);
+  }
+private:
+  String hostName = "n/a";
+  bool serialEnabled = false;
+  Stream *logSerial = NULL;
+  uint8_t logMem[LOG_SIZE + sizeof(LogHeader) + 8] = {0}; // 8 - guard interval
+  char passwd[11] = {0};
+  bool telnetConnected = false;
+  char * programVersion = NULL;
+  const char * commandDescription = NULL;
+  bool showDebugLevel = true;
+  LogLevel filterLogLevel = llInfo;
+  int oldMillis = 0;
+  LogTimeFormat logTimeFormat = ltStrTime;
+  String telnetCommand = "";
+  bool telnetAuthenticated = false;
 
-    // command callback
-    logCallback _cmdCallback;
+  // command callback
+  logCallback _cmdCallback;
 
-    WiFiServer telnetServer = WiFiServer(TELNET_PORT);
-    WiFiClient telnetClient;
+  WiFiServer telnetServer = WiFiServer(TELNET_PORT);
+  WiFiClient telnetClient;
 
-    LogHeader curHeader;
+  LogHeader curHeader;
 
-    void showInitMessage();
+  void showInitMessage();
     
-    int getNextLogPtr(int fromPtr);
-    int getEmptytLogPtr();
-    void addLogToBuffer(LogHeader &header, const char *buffer);
-    void showLog();
-    void formatLogMessage(String &str, const char *buffer, size_t size, LogHeader *header);
+  int getNextLogPtr(int fromPtr);
+  int getEmptytLogPtr();
+  void addLogToBuffer(LogHeader &header, const char *buffer);
+  void showLog();
+  void formatLogMessage(String &str, const char *buffer, size_t size, LogHeader *header);
 
-    void processLineBuffer();
-    bool processCommand(String &cmd);
+  void processLineBuffer();
+  bool processCommand(String &cmd);
 };
 
 #endif // ifndef __XLOGGER_H__
